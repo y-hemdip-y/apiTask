@@ -1,0 +1,52 @@
+<div>
+  <h2>Users List</h2>
+
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>Photo</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>User Type</th>
+        <th>Gender</th>
+        <th>Role</th> <!-- New column -->
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of pagedUsers">
+        <td>
+          <img 
+            *ngIf="user.image; else noPhoto" 
+            [src]="user.image" 
+            alt="User Photo" 
+            width="60" height="60" 
+            style="object-fit: cover; border-radius: 50%;" 
+          />
+          <ng-template #noPhoto>
+            <span>No photo</span>
+          </ng-template>
+        </td>
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone_number }}</td>
+        <td>{{ user.user_type }}</td>
+        <td>{{ user.gender }}</td>
+        <td>{{ user.role_name }}</td> <!-- Display mapped role name -->
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Pagination Controls -->
+  <div style="margin-top: 10px;">
+    <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
+    <span> Page {{ currentPage }} </span>
+    <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalUsers">Next</button>
+  </div>
+
+  <div style="color: red;">
+    {{ error }}
+  </div>
+</div>

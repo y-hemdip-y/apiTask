@@ -1,0 +1,20 @@
+.nav-container {
+  background-color: #333; /* Dark gray background */
+  padding: 15px 20px; /* Top/bottom and left/right padding */
+  display: flex; /* Arranges the links in a row */
+  align-items: center; /* Vertically centers the links */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Adds a subtle shadow */
+}
+
+.nav-link {
+  color: #9a67e4; /* Purple color for the links */
+  text-decoration: none; /* Removes the underline */
+  font-size: 16px;
+  margin-right: 25px; /* Adjust this value to control the space */
+  font-weight: 500;
+  transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+.nav-link:hover {
+  color: #c9b4f0; /* Lighter purple on hover */
+}

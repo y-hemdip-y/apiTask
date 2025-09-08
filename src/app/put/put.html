@@ -1,0 +1,86 @@
+<div>
+  <h2>Manage Users</h2>
+
+  <!-- Users Table -->
+  <table border="1" cellpadding="5">
+    <thead>
+      <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>User Type</th>
+        <th>Gender</th>
+        <th>Photo</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let user of users">
+        <td>{{ user.first_name }}</td>
+        <td>{{ user.last_name }}</td>
+        <td>{{ user.email }}</td>
+        <td>{{ user.phone_number }}</td>
+        <td>{{ user.user_type }}</td>
+        <td>{{ user.gender }}</td>
+        <td>
+          <!-- Show photo if exists -->
+          <img *ngIf="user.image" [src]="user.image" alt="User Photo" width="50" height="50" />
+          <input type="file" (change)="uploadPhoto($event, user)" />
+        </td>
+        <td>
+          <button (click)="selectUser(user)">Edit</button>
+          <button (click)="deleteUser(user)" style="margin-left: 5px;">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <!-- Edit Form -->
+  <div *ngIf="selectedUser" style="margin-top: 20px;">
+    <h3>Edit User: {{ selectedUser.first_name }} {{ selectedUser.last_name }}</h3>
+    <form [formGroup]="updateForm" (ngSubmit)="submitUpdate()">
+
+      <label>First Name:</label>
+      <input formControlName="first_name" type="text" /><br />
+
+      <label>Last Name:</label>
+      <input formControlName="last_name" type="text" /><br />
+
+      <label>Email:</label>
+      <input formControlName="email" type="email" /><br />
+
+      <label>Dial Code:</label>
+      <input formControlName="dial_code" type="text" /><br />
+
+      <label>Phone Number:</label>
+      <input formControlName="phone_number" type="text" /><br />
+
+      <label>Gender:</label>
+      <select formControlName="gender">
+        <option value="">Select</option>
+        <option value="male">Male</option>
+        <option value="female">Female</option>
+      </select><br />
+
+      <label>User Type:</label>
+      <input formControlName="user_type" type="text" /><br />
+
+      <label>Role ID:</label>
+      <input formControlName="role_id" type="text" /><br />
+
+      <label>Password:</label>
+      <input formControlName="password" type="password" /><br /><br />
+
+      <button type="submit" [disabled]="updateForm.invalid">Update User</button>
+    </form>
+  </div>
+
+  <!-- Messages -->
+  <div style="color: green; margin-top: 10px;" *ngIf="message === 'User updated successfully' || message === 'User deleted successfully' || message === 'Photo uploaded successfully'">
+    {{ message }}
+  </div>
+  <div style="color: red; margin-top: 10px;" *ngIf="message && message !== 'User updated successfully' && message !== 'User deleted successfully' && message !== 'Photo uploaded successfully'">
+    {{ message }}
+  </div>
+</div>
