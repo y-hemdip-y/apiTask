@@ -1,7 +1,7 @@
-<div>
-  <h2>Users List</h2>
+<div class="users-container">
+  <h2 class="table-title">Users List</h2>
 
-  <table border="1" cellpadding="5">
+  <table class="users-table">
     <thead>
       <tr>
         <th>Photo</th>
@@ -11,21 +11,20 @@
         <th>Phone</th>
         <th>User Type</th>
         <th>Gender</th>
-        <th>Role</th> <!-- New column -->
+        <th>Role</th>
       </tr>
     </thead>
     <tbody>
       <tr *ngFor="let user of pagedUsers">
-        <td>
+        <td class="photo-cell">
           <img 
             *ngIf="user.image; else noPhoto" 
             [src]="user.image" 
             alt="User Photo" 
-            width="60" height="60" 
-            style="object-fit: cover; border-radius: 50%;" 
+            class="user-photo" 
           />
           <ng-template #noPhoto>
-            <span>No photo</span>
+            <span class="no-photo-text">No photo</span>
           </ng-template>
         </td>
         <td>{{ user.first_name }}</td>
@@ -34,19 +33,18 @@
         <td>{{ user.phone_number }}</td>
         <td>{{ user.user_type }}</td>
         <td>{{ user.gender }}</td>
-        <td>{{ user.role_name }}</td> <!-- Display mapped role name -->
+        <td>{{ user.role_name }}</td>
       </tr>
     </tbody>
   </table>
 
-  <!-- Pagination Controls -->
-  <div style="margin-top: 10px;">
+  <div class="pagination-controls">
     <button (click)="prevPage()" [disabled]="currentPage === 1">Previous</button>
-    <span> Page {{ currentPage }} </span>
+    <span class="page-number"> Page {{ currentPage }} </span>
     <button (click)="nextPage()" [disabled]="currentPage * pageSize >= totalUsers">Next</button>
   </div>
 
-  <div style="color: red;">
+  <div class="error-message">
     {{ error }}
   </div>
 </div>

@@ -1,0 +1,99 @@
+.manage-users-container {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  /* Adjusted to be slightly more compact */
+  margin: 0 auto; /* Keeps the container centered */
+}
+
+.table-title {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  
+  table-layout: fixed; /* Ensures fixed column widths */
+}
+
+.users-table th, .users-table td {
+  padding: 10px;
+  font-size: 13px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Adjusted column widths for a more compact fit and to prevent buttons from being cut off */
+.users-table th:nth-child(1), .users-table td:nth-child(1) { width: 10%; }
+.users-table th:nth-child(2), .users-table td:nth-child(2) { width: 10%; }
+.users-table th:nth-child(3), .users-table td:nth-child(3) { width: 20%; } /* Adjusted email width */
+.users-table th:nth-child(4), .users-table td:nth-child(4) { width: 10%; }
+.users-table th:nth-child(5), .users-table td:nth-child(5) { width: 8%; }
+.users-table th:nth-child(6), .users-table td:nth-child(6) { width: 8%; }
+.users-table th:nth-child(7), .users-table td:nth-child(7) { width: 15%; }
+.users-table th:nth-child(8), .users-table td:nth-child(8) { width: 19%; } /* **Increased width for actions to prevent button cutoff** */
+
+.users-table thead {
+  background-color: #f5f5f5;
+  color: #555;
+  font-weight: bold;
+}
+
+.users-table tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+.user-photo {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #ddd;
+}
+
+.photo-cell {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-buttons {
+  display: flex; /* Makes the buttons appear side-by-side */
+  align-items: center;
+  gap: 6px;
+}
+
+.action-buttons button {
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.edit-button {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.edit-button:hover {
+  background-color: #2563eb;
+}
+
+.delete-button {
+  background-color: #dc2626;
+  color: white;
+}
+
+.delete-button:hover {
+  background-color: #b91c1c;
+}
