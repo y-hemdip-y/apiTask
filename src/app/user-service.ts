@@ -97,7 +97,6 @@ updateRole(roleId: string, roleName: string, description: string): Observable<an
   });
 }
 
-// ----- Delete Role -----
 deleteRole(roleId: string): Observable<any> {
   const roleBaseUrl = 'https://devapi.fixlastmile.com/api/api/v1/permission/role';
   return this.http.delete(`${roleBaseUrl}/${roleId}`);

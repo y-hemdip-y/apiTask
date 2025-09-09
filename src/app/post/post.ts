@@ -48,6 +48,7 @@ export class Post implements OnInit {
     const file = event.target.files[0];
     if (file) {
       this.selectedFile = file;
+      this.uploadedPhotoUrl = URL.createObjectURL(file);
     }
   }
 

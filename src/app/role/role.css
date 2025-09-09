@@ -1,3 +1,4 @@
+/* ---------- General Body ---------- */
 body {
   font-family: Arial, sans-serif;
   background-color: #f4f4f4;
@@ -5,58 +6,203 @@ body {
   padding: 20px;
 }
 
+/* ---------- Main Container ---------- */
 .main-container {
   max-width: 900px;
   margin: auto;
   background: white;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 25px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  transition: opacity 0.3s ease;
 }
 
-.role-form-container {
-  display: flex;
-  gap: 10px;
+.main-container.list-faded {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* ---------- Header Actions ---------- */
+.header-actions {
   margin-bottom: 20px;
-  align-items: center;
 }
 
-.role-form-container input {
-  flex-grow: 1;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-.role-form-container button {
-  padding: 8px 16px;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
+/* ---------- Table Styles ---------- */
 .roles-table {
   width: 100%;
   border-collapse: collapse;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
-.roles-table th, .roles-table td {
+.roles-table th,
+.roles-table td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 12px 15px;
   text-align: left;
 }
 
 .roles-table th {
-  background-color: #f2f2f2;
+  background-color: #007bff;
+  color: white;
+  font-weight: 600;
 }
 
-.roles-table .edit-btn {
+.roles-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.roles-table tr:hover {
+  background-color: #f1f1f1;
+}
+
+/* ---------- Buttons ---------- */
+button {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 7px 14px;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #565e64;
+}
+
+.btn-edit {
   background-color: #ffc107;
   color: black;
 }
 
-.roles-table .delete-btn {
+.btn-edit:hover {
+  background-color: #e0a800;
+}
+
+.btn-delete {
   background-color: #dc3545;
   color: white;
+}
+
+.btn-delete:hover {
+  background-color: #b21f2d;
+}
+
+/* ---------- Overlay / Curtain Styles ---------- */
+.overlay-curtain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Overlay Frame */
+.overlay-frame {
+  background-color: #fff;
+  padding: 25px 30px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
+}
+
+/* Overlay Header */
+.overlay-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.overlay-header h3 {
+  margin: 0;
+}
+
+.close-btn {
+  background: transparent;
+  font-size: 1.3rem;
+  cursor: pointer;
+  border: none;
+}
+
+/* Form inside Overlay */
+.overlay-form .form-group {
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.overlay-form label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.overlay-form input {
+  padding: 8px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+
+/* Overlay Form Buttons */
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modal-actions .btn-primary,
+.modal-actions .btn-secondary {
+  padding: 8px 15px;
+  font-size: 0.9rem;
+}
+
+
+.header-actions {
+  display: flex;
+  justify-content: space-between; /* pushes search left, button right */
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.search-input {
+  flex: 1;
+  max-width: 300px;
+  padding: 6px 10px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #0056b3;
 }

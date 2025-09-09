@@ -32,6 +32,8 @@
   align-items: center;
   margin: 0 auto;
   background-color: #e6f0f9;
+  overflow: hidden;       /* 🔹 ensures photo stays inside circle */
+  cursor: pointer;        /* 🔹 makes it clickable */
 }
 
 .user-avatar .icon {
@@ -39,6 +41,14 @@
   height: 50px;
   color: #3b82f6;
 }
+
+.user-photo-preview {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;      /* 🔹 fills the circle properly */
+  border-radius: 50%;     /* 🔹 keeps preview circular */
+}
+
 
 .section-divider {
   text-align: center;
@@ -71,6 +81,7 @@
   grid-template-columns: 1fr 1fr;
   gap: 15px; 
   margin-bottom: 15px;
+  margin-top: 15px;
 }
 
 .form-group.full-width {

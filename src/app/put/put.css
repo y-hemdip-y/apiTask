@@ -1,7 +1,7 @@
 .manage-users-container {
   padding: 20px;
   font-family: Arial, sans-serif;
-  /* Adjusted to be slightly more compact */
+  font-size: 16px; /* corrected 'size' to 'font-size' */
   margin: 0 auto; /* Keeps the container centered */
 }
 
@@ -16,7 +16,6 @@
   border-collapse: collapse;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
-  
   table-layout: fixed; /* Ensures fixed column widths */
 }
 
@@ -30,15 +29,15 @@
   white-space: nowrap;
 }
 
-/* Adjusted column widths for a more compact fit and to prevent buttons from being cut off */
+/* Column widths */
 .users-table th:nth-child(1), .users-table td:nth-child(1) { width: 10%; }
 .users-table th:nth-child(2), .users-table td:nth-child(2) { width: 10%; }
-.users-table th:nth-child(3), .users-table td:nth-child(3) { width: 20%; } /* Adjusted email width */
+.users-table th:nth-child(3), .users-table td:nth-child(3) { width: 20%; }
 .users-table th:nth-child(4), .users-table td:nth-child(4) { width: 10%; }
 .users-table th:nth-child(5), .users-table td:nth-child(5) { width: 8%; }
 .users-table th:nth-child(6), .users-table td:nth-child(6) { width: 8%; }
 .users-table th:nth-child(7), .users-table td:nth-child(7) { width: 15%; }
-.users-table th:nth-child(8), .users-table td:nth-child(8) { width: 19%; } /* **Increased width for actions to prevent button cutoff** */
+.users-table th:nth-child(8), .users-table td:nth-child(8) { width: 19%; }
 
 .users-table thead {
   background-color: #f5f5f5;
@@ -65,7 +64,7 @@
 }
 
 .action-buttons {
-  display: flex; /* Makes the buttons appear side-by-side */
+  display: flex; 
   align-items: center;
   gap: 6px;
 }
@@ -96,4 +95,173 @@
 
 .delete-button:hover {
   background-color: #b91c1c;
+}
+
+/* Overlay behind modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);  /* fade effect */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Modal box */
+.modal-content {
+  background: #fff;
+  padding: 25px;
+  border-radius: 12px;
+  width: 500px;
+  max-width: 90%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.25);
+  animation: popIn 0.3s ease-in-out;
+}
+
+/* Header with close button */
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.modal-form .form-group {
+  margin-bottom: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.update-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.cancel-button {
+  background: #ccc;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+/* ===== Validation Messages ===== */
+.error-text {
+  color: red;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+/* Success/Error messages for main container */
+.message-container .success-message {
+  color: green;
+  margin-top: 10px;
+}
+
+.message-container .error-message {
+  color: red;
+  margin-top: 10px;
+}
+
+/* Animation */
+@keyframes popIn {
+  from { transform: scale(0.8); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+.table-title {
+  text-align: center;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.header-controls {
+  display: flex;
+  justify-content: flex-end; /* Push button to the right */
+  margin-bottom: 20px;
+}
+
+.add-user-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease;
+}
+
+.add-user-button:hover {
+  background-color: #2563eb;
+}
+
+/* Header container */
+.manage-users-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+/* Controls (search + button) */
+.header-controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 10px;
+  gap: 10px;
+}
+
+/* Search input */
+.search-input {
+  flex: 1;
+  padding: 6px 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  outline: none;
+  max-width: 300px;
+}
+
+/* Add Users button */
+.add-user-button {
+  background-color: #3b82f6;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.add-user-button:hover {
+  background-color: #2563eb;
+}
+
+/* Optional: make title centered */
+.table-title {
+  text-align: center;
+  font-size: 22px;
+  margin-bottom: 5px;
+  color: #333;
 }

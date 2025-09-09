@@ -1,20 +1,19 @@
-<div class="main-container">
-  <!-- Create or Update Role -->
-  <div class="role-form-container">
+<div class="main-container" [class.list-faded]="isOverlayOpen">
+  <!-- Create Role Button -->
+   <div class="header-actions">
+    <!-- Search Bar on Left -->
     <input
       type="text"
-      [(ngModel)]="roleName"
-      placeholder="Enter role name"
+      class="search-input"
+      placeholder="Search roles..."
+      [(ngModel)]="searchTerm"
+      (input)="getFilteredRoles()"
     />
-    <input
-      type="text"
-      [(ngModel)]="description"
-      placeholder="Enter description"
-    />
-    <button (click)="createRole()">Create/Update Role</button>
-  </div>
 
-  <!-- Display Roles in Table -->
+    <!-- Create Role Button on Right -->
+    <button class="btn-primary" (click)="openRoleForm()">Create Role</button>
+  </div>
+  <!-- Roles Table -->
   <table class="roles-table">
     <thead>
       <tr>
@@ -25,17 +24,43 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let role of roles">
+      <tr *ngFor="let role of filteredRoles">
         <td>{{ role.role_name }}</td>
         <td>{{ role.description || 'No description' }}</td>
         <td>
-          <button class="edit-btn" (click)="editRole(role)">Edit</button>
+          <button class="btn-edit" (click)="openRoleForm(role)">Edit</button>
         </td>
         <td>
-          <button class="delete-btn" (click)="deleteRole(role.id)">Delete</button>
+          <button class="btn-delete" (click)="deleteRole(role.id)">Delete</button>
         </td>
       </tr>
     </tbody>
   </table>
 </div>
-  
+
+<!-- Overlay Curtain Form -->
+<div class="overlay-curtain" *ngIf="isOverlayOpen">
+  <div class="overlay-frame">
+    <div class="overlay-header">
+      <h3>{{ editingRoleId ? 'Update Role' : 'Create Role' }}</h3>
+      <button class="close-btn" (click)="closeRoleForm()">✖</button>
+    </div>
+
+    <form (ngSubmit)="submitRole()" class="overlay-form">
+      <div class="form-group">
+        <label>Role Name:</label>
+        <input type="text" [(ngModel)]="roleName" name="roleName" required />
+      </div>
+
+      <div class="form-group">
+        <label>Description:</label>
+        <input type="text" [(ngModel)]="description" name="description" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" class="btn-primary">{{ editingRoleId ? 'Update' : 'Create' }}</button>
+        <button type="button" class="btn-secondary" (click)="closeRoleForm()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>

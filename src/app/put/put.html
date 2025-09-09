@@ -1,37 +1,54 @@
 <div class="page-container">
+   <div class="manage-users-container">
 
+    <!-- Header with Title, Search, and Add User -->
+    <div class="manage-users-header">
+      <h2 class="table-title">Manage Users</h2>
 
-  <div class="manage-users-container">
-    <h2 class="table-title">Manage Users</h2>
+      <div class="header-controls">
+        <!-- Search Input on the left -->
+        <input
+          type="text"
+          class="search-input"
+          placeholder="Search users..."
+          [(ngModel)]="searchTerm"
+          (input)="filterUsers()"
+        />
 
+        <!-- Add Users Button on the right -->
+        <a class="add-user-button" routerLink="/post">Add Users</a>
+      </div>
+</div>
+
+    <router-outlet>
+
+    </router-outlet>
     <div class="users-table-wrapper">
       <table class="users-table">
         <thead>
           <tr>
+            <th>Photo</th>
             <th>First Name</th>
             <th>Last Name</th>
             <th>Email</th>
             <th>Phone</th>
-            <th>User Type</th>
             <th>Gender</th>
-            <th>Photo</th>
+            <th>Role</th>
             <th>Actions</th>
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let user of users">
+          <tr *ngFor="let user of filteredUsers">
+            <td>
+              <img *ngIf="user.image" [src]="user.image" alt="User Photo" class="user-photo" />
+              <span *ngIf="!user.image" class="no-photo">No Photo</span>
+            </td>
             <td>{{ user.first_name }}</td>
             <td>{{ user.last_name }}</td>
             <td>{{ user.email }}</td>
             <td>{{ user.phone_number }}</td>
-            <td>{{ user.user_type }}</td>
             <td>{{ user.gender }}</td>
-            <td>
-              <div class="photo-cell">
-                <img *ngIf="user.image" [src]="user.image" alt="User Photo" class="user-photo" />
-                <input type="file" (change)="uploadPhoto($event, user)" />
-              </div>
-            </td>
+            <td>{{ user.role_name }}</td>
             <td class="action-buttons" style="width: 10vw;">
               <div class="button-group">
                 <button (click)="selectUser(user)" class="edit-button" style="margin: 3px;">Edit</button>
@@ -43,70 +60,105 @@
       </table>
     </div>
 
-    <div *ngIf="selectedUser" class="edit-form-container">
-      <h3>Edit User: {{ selectedUser.first_name }} {{ selectedUser.last_name }}</h3>
-      <form [formGroup]="updateForm" (ngSubmit)="submitUpdate()">
-
-        <div class="form-group">
-          <label>First Name:</label>
-          <input formControlName="first_name" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Last Name:</label>
-          <input formControlName="last_name" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Email:</label>
-          <input formControlName="email" type="email" />
-        </div>
-
-        <div class="form-group">
-          <label>Dial Code:</label>
-          <input formControlName="dial_code" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Phone Number:</label>
-          <input formControlName="phone_number" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Gender:</label>
-          <select formControlName="gender">
-            <option value="">Select</option>
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-          </select>
-        </div>
-
-        <div class="form-group">
-          <label>User Type:</label>
-          <input formControlName="user_type" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Role ID:</label>
-          <input formControlName="role_id" type="text" />
-        </div>
-
-        <div class="form-group">
-          <label>Password:</label>
-          <input formControlName="password" type="password" />
-        </div>
-
-        <button type="submit" [disabled]="updateForm.invalid" class="update-button">Update User</button>
-      </form>
-    </div>
-
     <div class="message-container">
-      <div *ngIf="message === 'User updated successfully' || message === 'User deleted successfully' || message === 'Photo uploaded successfully'" class="success-message">
+      <div *ngIf="message === 'User updated successfully' || message === 'User deleted successfully' || message.includes('Photo uploaded')" class="success-message">
         {{ message }}
       </div>
-      <div *ngIf="message && message !== 'User updated successfully' && message !== 'User deleted successfully' && message !== 'Photo uploaded successfully'" class="error-message">
+      <div *ngIf="message && !(
+          message === 'User updated successfully' || 
+          message === 'User deleted successfully' || 
+          message.includes('Photo uploaded'))" class="error-message">
         {{ message }}
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay" *ngIf="selectedUser">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>Edit User: {{ selectedUser.first_name }} {{ selectedUser.last_name }}</h3>
+      <button class="close-btn" (click)="selectedUser = null">✖</button>
+    </div>
+
+    <form [formGroup]="updateForm" (ngSubmit)="submitUpdate()" class="modal-form">
+      <!-- First Name -->
+      <div class="form-group">
+        <label>First Name:</label>
+        <input formControlName="first_name" type="text" />
+        <div class="error-message" *ngIf="updateForm.get('first_name')?.touched && updateForm.get('first_name')?.hasError('required')">
+          First name is required.
+        </div>
+      </div>
+
+      <!-- Last Name -->
+      <div class="form-group">
+        <label>Last Name:</label>
+        <input formControlName="last_name" type="text" />
+        <div class="error-message" *ngIf="updateForm.get('last_name')?.touched && updateForm.get('last_name')?.hasError('required')">
+          Last name is required.
+        </div>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label>Email:</label>
+        <input formControlName="email" type="email" />
+        <div class="error-message" *ngIf="updateForm.get('email')?.touched">
+          <span *ngIf="updateForm.get('email')?.hasError('required')">Email is required.</span>
+          <span *ngIf="updateForm.get('email')?.hasError('email')">Invalid email format.</span>
+        </div>
+      </div>
+
+      <!-- Phone -->
+      <div class="form-group">
+        <label>Phone:</label>
+        <input formControlName="phone_number" type="text" />
+        <div class="error-message" *ngIf="updateForm.get('phone_number')?.touched">
+          <span *ngIf="updateForm.get('phone_number')?.hasError('required')">Phone number is required.</span>
+          <span *ngIf="updateForm.get('phone_number')?.hasError('pattern')">Phone number must be exactly 10 digits.</span>
+        </div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label>Gender:</label>
+        <select formControlName="gender">
+          <option value="">Select</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+        <div class="error-message" *ngIf="updateForm.get('gender')?.touched && updateForm.get('gender')?.hasError('required')">
+          Gender is required.
+        </div>
+      </div>
+
+      <!-- Role -->
+      <div class="form-group">
+        <label>Role:</label>
+        <select formControlName="role_id">
+          <option value="">Select Role</option>
+          <option *ngFor="let role of roles" [value]="role.id">{{ role.role_name }}</option>
+        </select>
+        <div class="error-message" *ngIf="updateForm.get('role_id')?.touched && updateForm.get('role_id')?.hasError('required')">
+          Role is required.
+        </div>
+      </div>
+
+      <!-- Photo Upload -->
+      <div class="form-group">
+        <label>Photo:</label>
+        <div *ngIf="selectedUser.image" class="photo-preview">
+          <img [src]="selectedUser.image" alt="User Photo" class="user-photo" />
+        </div>
+        <input type="file" (change)="uploadPhoto($event, selectedUser)" />
+      </div>
+
+      <div class="modal-actions">
+        <button type="submit" [disabled]="updateForm.invalid" class="update-button">Update User</button>
+        <button type="button" (click)="selectedUser = null" class="cancel-button">Cancel</button>
+      </div>
+    </form>
   </div>
 </div>
